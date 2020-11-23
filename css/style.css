@@ -1,25 +1,62 @@
 body {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    width: 80%;
-    font-size: 1000px;
-};
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    width: 100wv;
+    background-color: ghostwhite;
+}
 
-body p {
-    font-size: 100px;   
-};
+a {
+    text-decoration: none;
+    color: black;
+}
 
-nav {
-    position: fixed;
+a:hover {
+    text-decoration: underline;
+    color: burlywood;
+}
+
+.nav-menu {
     display: flex;
-    flex-wrap: nowrap;
-    width: 100%;
-    height: 50px;
-    flex-direction: row;
-    flex: auto;
-    border: 10px;
-};
+}
+
+.nav-menu .menu-item {
+    font-size: 25px;
+    padding: 25px;
+    list-style-type: none;
+    padding-left: 0;
+}
 
 .nav-menu .menu-item a {
-    font-size: 100px;
-
+    text-decoration: none;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-transform: uppercase;
+    font-size: 15px;
+    color: black;
 }
+
+.nav-menu .menu-item a:hover {
+    color: burlywood;
+    text-decoration: underline;
+}
+
+.main-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 20px;
+}
+
+.logo-grid {
+    grid-column: 1 / 2;
+}
+
+.nav-grid {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 50px;
+    stroke: bisque;
+    grid-column: 2 / 3;
+}
+
+.login-grid {
+    grid-column: 3 / -1;
+    padding: 50px;
+}
+
