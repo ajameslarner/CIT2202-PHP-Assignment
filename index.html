@@ -5,39 +5,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <meta name="Description" content="Enter your description here"/>
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="../CIT2202-PHP-Assignment/css/style.css">
 <title>CIT2202 PHP Assignment</title>
 </head>
 <body>
-<img src="/img/Rio.jpg" alt="bg">
+
+<div class="main-content">
+    <section class="nav-grid">
+        <div class="logo-container">
+            <a href="index.html"><img src="../CIT2202-PHP-Assignment/img/logo.png" alt="logo"></a>
+        </div>
+        <div>
+            <ul class="nav-menu">
+                <li class="menu-item"><a href="index.html">Home</a></li>
+                <li class="menu-item"><a href="about.html">About</a></li>
+                <li class="menu-item"><a href="login.html">Login</a></li>
+                <li class="menu-item"><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+        <div class="login-form">
+            <form action="POST">
+                <input type="text" placeholder="username">
+                <input type="text" placeholder="password">
+                <input type="button" value="Login" style="width: 75px;"><br>
+                <a href="pw-reset.html">Forgot your password?</a>
+            </form>
+        </div>
+        <div class="nav-search">
+            <form action="GET">
+            <p>Search for hotels in the Kirklees area today!</p>
+            <input type="text" placeholder="Search for hotels...">
+        </form>
+        </div>
+        <div class="nav-search">
+            <p>Choose a start date!</p>
+            <input type="date">
+        </div>
+    </section>
 <section class="main-grid">
-<div class="header-grid" name="header"><a href="index.html"><img src="/img/logo.png" alt="logo"></a></div>
-<div class="nav-grid" name="nav">
-    <ul class="nav-menu">
-        <li class="menu-item"><a href="index.html">Home</a></li>
-        <li class="menu-item"><a href="about.html">About</a></li>
-        <li class="menu-item"><a href="login.html">Login</a></li>
-        <li class="menu-item"><a href="contact.html">Contact</a></li>
-    </ul>
-</div>
-<div class="login-grid" name="login">
-    <form action="POST">
-        <input type="text" placeholder="username">
-        <input type="text" placeholder="password">
-        <input type="button" value="Login"><br>
-        <a href="pw-reset.html">Forgot your password?</a>
-    </form>
-</div>
-<div class="grid-item four" name=""></div>
-<div class="grid-item five" name=""></div>
-<div class="grid-item six" name=""></div>
-<div class="grid-item seven" name=""></div>
-<div class="grid-item eight" name=""></div>
+    <div class="grid-item"><h1>Explore. <span>Discover.</span> Travel.</h1></div>
+    <div class="grid-item"><img src="../CIT2202-PHP-Assignment/img/Rio.jpg" alt=""></div>
+    <div class="grid-item"></div>
+    <div class="grid-item"></div>
+    <div class="grid-item"></div>
+    <div class="grid-item"></div>
 </section>
-
-
-
-
 </div>
 </body>
 </html>
