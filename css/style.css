@@ -61,17 +61,27 @@ a:hover {
 }
 
 .grid-item-fill {
-    grid-column: 3 / -1;
+    grid-column: 1 / -1;
+    margin: auto;
+    text-align: center;
 }
-
-.form-promo {
-    grid-column: 1 / 3;
-    border: 10px solid black; 
-}
-
 .form-control {
     padding: 50px;
-    border: 10px solid black;
+    /* border: 10px solid black; */
+}
+
+.form-button {
+    margin: 60px;
+    width: 150px;
+    height: 55px;
+    border-radius: 100px;
+    border-style: none;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    background-color: black;
+    opacity: 0.9;
+    font-weight: 900;
 }
 
 .form-input {
