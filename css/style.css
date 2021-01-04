@@ -102,30 +102,51 @@ a:hover {
     background-color: ghostwhite;
     position: relative;
     border-bottom: 10px solid rgba(0,0,0, 0.6);
+    /* border: 10px solid black; */
 }
 
-.nav-content .login-form {
+.login-form {
     display: flex;
     justify-content: left;
     padding: 20px;
 }
 
-.nav-content .login-form input {
+.login-form input {
     border-style: solid;
     padding: 5px;
+    border-radius: 5px;
 }
 
-.nav-content .nav-search input {
-    width: 350px;
-    margin-left: 50px;
-    padding: 15px;
-    border-radius: 20px;
+.nav-search {
+    /* border: 10px solid black; */
+}
+
+.nav-search #location {
+    width: 450px;
+    height: 18px;
     border-style: solid;
+    padding: 5px;
+    border-radius: 5px;
 }
 
-.nav-content .nav-search p {
-    width: 350px;
-    margin-left: 50px;
+.nav-search #date {
+    width: 200px;
+    height: 18px;
+    border-style: solid;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.nav-search #submit {
+    width: 100px;
+    border-style: solid;
+    margin-left: 25px;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.nav-search p {
+    margin-left: 10px;
 }
 
 .nav-menu {
