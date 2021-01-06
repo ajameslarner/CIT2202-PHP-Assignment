@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Enter your description here" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="scripts/actions.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>CIT2202 PHP Assignment</title>
 </head>
@@ -25,7 +27,7 @@
             <form method="POST">
                 <input type="text" placeholder="username">
                 <input type="text" placeholder="password">
-                <input type="button" value="Login" style="width: 75px;"><br>
+                <input type="submit" value="Login" style="width: 75px;"><br>
                 <a href="pw-reset.html">Forgot your password?</a>
                 <a href="pw-reset.html">Create account</a>
             </form>
@@ -33,12 +35,14 @@
         <div class="nav-search">
             <form action="location.php" method="GET">
                 <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" name="location" id="location" placeholder="Search for hotels in your area...">
+                <input type="text" name="location" id="location" placeholder="Search for hotels in your area..." autocomplete="off" required>
+                <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
+                </div>
         </div>
         <div class="nav-search">
             <p>Choose a start date!</p>
             <input type="date" name="date" id="date">
-            <input type="button" value="Submit" id="submit">
+            <input type="submit" id="submit" value="Go!">
         </div>
             </form>
     </section>
@@ -109,3 +113,29 @@
     </div>
 </body>
 </html>
+<script>
+    $(document).ready(function() {
+        $('#location').keyup(function() {
+            var query = $(this).val();
+            if (query != '') {
+                $.ajax({
+                    url:"search.php",
+                    method: "POST",
+                    data: {query:query},
+                    success: function(data){
+                        $('#location-list').fadeIn();
+                        $('#location-list').html(data);
+                    }
+
+                });
+            } else {
+                $('#location-list').fadeOut();
+            }
+
+        });
+        $(document).on('click', 'li', function(){
+           $('#location').val($(this).text());
+           $('#location-list').fadeOut();
+        })
+    });
+</script>
