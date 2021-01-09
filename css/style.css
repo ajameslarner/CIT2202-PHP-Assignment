@@ -8,7 +8,7 @@ body {
 
 .primary-content {
     width: 1250px;
-    height: 1000px;
+    height: 100%;
     margin: auto;
     padding: 0;
     -webkit-box-shadow: 0 20px 20px rgba(0,0,0, 0.6);
@@ -44,7 +44,7 @@ a:hover {
 
 .grid-item-header {
     grid-column: 1 / -1;
-    padding: 50px;
+    padding: 20px;
     text-align: center;
 }
 
@@ -65,10 +65,90 @@ a:hover {
     margin: auto;
     text-align: center;
 }
+
+.results-list {
+    padding: 25px;
+}
+
+.result-content {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    border: 1px solid black;
+    padding: 25px;
+    height: 250px;
+}
+
 .form-control {
     padding: 50px;
-    /* border: 10px solid black; */
 }
+
+.amen {
+    grid-column: 1 / -1;
+    height: 10px;
+}
+
+.amen ul {
+    display: flex;
+    float: right;
+    position: relative;
+    top: -30px;
+    right: -5px;
+    padding: 20px;
+}
+
+.amen li {
+    font-size: 20px;
+    padding-left: 30px;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.stars {
+    grid-column: 1 / -1;
+}
+
+.stars ul {
+    display: flex;
+    float: right;
+    position: relative;
+    right: -5px;
+    top: -70px;
+    padding: 20px;
+}
+
+.stars li {
+    font-size: 20px;
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.desc {
+    grid-column: 1 / -1;
+    position: absolute;
+}
+
+.desc h3 {
+    position: absolute;
+    font-size: 30px;
+    top: -15px;
+    left: 40px; 
+    width: 500px;
+}
+
+.desc h4 {
+    position: relative;
+    float: right;
+    text-align: right;
+    font-size: 25px;
+    top: 150px;
+    left: 800px;
+    width: auto;
+}
+
+.desc p {
+    
+}
+
 
 .form-button {
     margin: 60px;
@@ -267,6 +347,7 @@ a:hover {
 }
 
 .secondary-content {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 3px;
@@ -279,6 +360,7 @@ a:hover {
     -moz-box-shadow: 0 20px 20px rgba(0,0,0, 0.6);
     box-shadow: 0 5px 20px rgba(0,0,0, 0.6);
     border-bottom: 10px solid rgba(0,0,0, 0.7);
+    z-index: 9999;
 }
 
 .secondary-content .grid-promo {
@@ -290,11 +372,11 @@ a:hover {
 
 }
 
-.grid-promo img {
+/* .grid-promo img {
     -webkit-box-shadow: 0 20px 20px rgba(0,0,0, 0.6);
     -moz-box-shadow: 0 20px 20px rgba(0,0,0, 0.6);
     box-shadow: 0 5px 20px rgba(0,0,0, 0.6);
-}
+} */
 
 .grid-promo h2 {
     text-align: center;

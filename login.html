@@ -5,13 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Enter your description here" />
-    <link rel="stylesheet" href="../CIT2202-PHP-Assignment/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
     <title>CIT2202 PHP Assignment</title>
 </head>
 <body>
     <section class="nav-content">
         <div class="logo-container">
-            <a href="index.html"><img src="../CIT2202-PHP-Assignment/img/logo.png" alt="Kirklees Hotels Logo"></a>
+            <a href="index.html"><img src="img/logo.png" alt="Kirklees Hotels Logo"></a>
         </div>
         <div>
             <ul class="nav-menu">
@@ -22,22 +22,25 @@
             </ul>
         </div>
         <div class="login-form">
-            <form action="POST">
+            <form method="POST">
                 <input type="text" placeholder="username">
                 <input type="text" placeholder="password">
-                <input type="button" value="Login" style="width: 75px;"><br>
+                <input type="submit" value="Login" style="width: 75px;"><br>
                 <a href="pw-reset.html">Forgot your password?</a>
                 <a href="pw-reset.html">Create account</a>
             </form>
         </div>
         <div class="nav-search">
-            <form action="GET">
+            <form action="location.php" method="GET">
                 <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" placeholder="Search for hotels...">
+                <input type="text" name="location" id="location" placeholder="Search for hotels in your area..." autocomplete="off" required>
+                <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
+                </div>
         </div>
         <div class="nav-search">
             <p>Choose a start date!</p>
-            <input type="date">
+            <input type="date" name="date" id="date">
+            <input type="submit" id="submit" value="Go!">
         </div>
             </form>
     </section>
@@ -49,7 +52,7 @@
             </div>
             <div class="form-promo">
                 <div id="img-cont">
-                    <img src="../CIT2202-PHP-Assignment/img/para1.pn" alt="">
+                    <img src="img/para1.pn" alt="">
                 </div>
             </div>
             <div class="grid-item-fill">
@@ -66,10 +69,6 @@
             </div>
             <div class="grid-item-aside"></div>
             <div class="grid-item-footer"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
-            <div class="grid-item"></div>
         </div>
     </section>
     <section class="tertiary-content">
