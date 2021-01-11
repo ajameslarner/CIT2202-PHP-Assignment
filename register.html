@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="Description" content="Enter your description here" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/7eeeb655ee.js" crossorigin="anonymous"></script>
+    <script src="scripts/actions.js"></script>
     <link rel="stylesheet" href="css/style.css">
     <title>CIT2202 PHP Assignment</title>
 </head>
@@ -13,12 +16,11 @@
         <div class="logo-container">
             <a href="index.html"><img src="img/logo.png" alt="Kirklees Hotels Logo"></a>
         </div>
-        <div>
-            <ul class="nav-menu">
-                <li class="menu-item"><a href="index.html">Home</a></li>
-                <li class="menu-item"><a href="about.html">About</a></li>
-                <li class="menu-item"><a href="login.html">Login</a></li>
-                <li class="menu-item"><a href="contact.html">Contact</a></li>
+        <div class="nav-first">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="register.html">Register</a></li>
             </ul>
         </div>
         <div class="login-form">
@@ -43,19 +45,33 @@
             <input type="submit" id="submit" value="Go!">
         </div>
             </form>
+        <div class="nav-second">
+            <ul>
+                <a href="location.php"><li>Amenities</li></a>
+                <a href="location.php"><li>Hotel Styles</li></a>
+                <a href="location.php"><li>Locations</li></a>
+            </ul>
+        </div>
+        <div class="nav-third">
+            <ul>
+                <a href="#"><li><i class="fab fa-twitter-square"></i></li></a>
+                <a href="#"><li><i class="fab fa-facebook-square"></i></li></a>
+                <a href="#"><li><i class="fab fa-instagram-square"></i></li></a>
+            </ul>
+        </div>
     </section>
     <section class="primary-content">
         <div class="grid-content">
             <div class="grid-item-header">
                 <h1>Create <span>your</span> account</h1>
-                <p>Use this area to login</p>
+                <p>Join us and list your venues!</p>
             </div>
             <div class="form-promo">
                 <div id="img-cont">
                     <img src="img/para1.pn" alt="">
                 </div>
             </div>
-            <div class="grid-item-fill">
+            <div class="grid-item register">
                 <form action="POST">
                     <div class="form-control">
                         <p>First name: </p><input class="form-input" type="text" placeholder="Click to begin..."><br>

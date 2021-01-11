@@ -12,7 +12,7 @@
     <title>CIT2202 PHP Assignment</title>
 </head>
 <body>
-<section class="nav-content">
+    <section class="nav-content">
         <div class="logo-container">
             <a href="index.html"><img src="img/logo.png" alt="Kirklees Hotels Logo"></a>
         </div>
@@ -27,7 +27,7 @@
             <form method="POST">
                 <input type="text" placeholder="username">
                 <input type="text" placeholder="password">
-                <input type="submit" id="login-btn" value="Login"><br>
+                <input type="submit" value="Login" style="width: 75px;"><br>
                 <a href="pw-reset.html">Forgot your password?</a>
                 <a href="pw-reset.html">Create account</a>
             </form>
@@ -42,7 +42,7 @@
         <div class="nav-search">
             <p>Choose a start date!</p>
             <input type="date" name="date" id="date">
-            <input type="submit" id="search-btn" value="Go!">
+            <input type="submit" id="submit" value="Go!">
         </div>
             </form>
         <div class="nav-second">
@@ -60,54 +60,17 @@
             </ul>
         </div>
     </section>
-    <div class="bg-container">
     <section class="primary-content">
-        <div class="index-slider">
-            <div class="slider-content-header">
-                <h1>Discover. <span>Explore</span>. Travel.</h1>
+        <div class="grid-content">
+            <div class="grid-item-header">
+                <h1>Create <span>your</span> account</h1>
+                <p>Join us and list your venues!</p>
             </div>
-            <div class="slider-content-desc">
-                <p>"The <span>Kirklees</span> area lies on the Southern Border of West Yorkshire. A small yet beautiful
-                    pocket of the Yorkshire Dales, use this site to find a hotel that best for you."</p>
+            <div class="form-promo">
             </div>
+            <div class="grid-item-aside"></div>
+            <div class="grid-item-footer"></div>
         </div>
-    </section>
-    </div>
-    <section class="secondary-content">
-        <div class="grid-promo">
-            <img src="img/promo.png"
-                style="width: 250px; height: 250px; border-radius: 500px; border: 1px solid black;" alt="">
-            <div class="promo-content">
-                <h2>Hotel One</h2>
-            </div>
-            <div class="promo-content">
-                <p>This hotel is amazing, this is alot of conent to see waht it looks like when its wrapped around in a
-                    contained section of the website for the descriopti oon this thumbnai .</p>
-            </div>
-        </div>
-        <div class="grid-promo">
-            <img src="img/promo.png"
-                style="width: 250px; height: 250px; border-radius: 500px; border: 1px solid black;" alt="">
-            <div class="promo-content">
-                <h2>Hotel Two</h2>
-            </div>
-            <div class="promo-content">
-                <p>This hotel is amazing, this is alot of conent to see waht it looks like when its wrapped around in a
-                    contained section of the website for the descriopti oon this thumbnai .</p>
-            </div>
-        </div>
-        <div class="grid-promo">
-            <img src="img/promo.png"
-                style="width: 250px; height: 250px; border-radius: 500px; border: 1px solid black;" alt="">
-            <div class="promo-content">
-                <h2>Hotel Three</h2>
-            </div>
-            <div class="promo-content">
-                <p>This hotel is amazing, this is alot of conent to see waht it looks like when its wrapped around in a
-                    contained section of the website for the descriopti oon this thumbnai .</p>
-            </div>
-        </div>
-    </div>
     </section>
     <section class="tertiary-content">
         <div class="grid-footer">
@@ -127,29 +90,3 @@
     </div>
 </body>
 </html>
-<script>
-    $(document).ready(function() {
-        $('#location').keyup(function() {
-            var query = $(this).val();
-            if (query != '') {
-                $.ajax({
-                    url:"search.php",
-                    method: "POST",
-                    data: {query:query},
-                    success: function(data){
-                        $('#location-list').fadeIn();
-                        $('#location-list').html(data);
-                    }
-
-                });
-            } else {
-                $('#location-list').fadeOut();
-            }
-
-        });
-        $(document).on('click', '#location-list li', function(){
-           $('#location').val($(this).text());
-           $('#location-list').fadeOut();
-        })
-    });
-</script>
