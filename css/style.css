@@ -10,7 +10,6 @@ body {
     width: 1250px;
     height: 100%;
     margin: auto;
-    padding: 0;
     -webkit-box-shadow: 0 20px 20px rgba(0,0,0, 0.6);
     -moz-box-shadow: 0 20px 20px rgba(0,0,0, 0.6);
     box-shadow: 0 5px 20px rgba(0,0,0, 0.6);
@@ -26,7 +25,7 @@ body {
 
 a {
     text-decoration: none;
-    color: black;
+    color: rgba(0,0,0, 0.6)
 }
 
 a:hover {
@@ -38,8 +37,16 @@ a:hover {
     display: grid;
     grid-template-columns: auto auto auto auto;
     grid-gap: 3px;
-    margin: auto;
-    border: 10px solid black;
+}
+
+.grid-item {
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
 }
 
 .grid-item-header {
@@ -61,14 +68,67 @@ a:hover {
     text-transform: uppercase;
 }
 
-.grid-item {
-    grid-column: 1 / -1;
+.register-img {
+    grid-column: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 9999;
 }
 
-.register {
-    grid-column: 4 / -1;
-    border: 10px solid black;
+.register-img img {
+    border: 1px solid black;
+    width: 100%;
+    height: 400px;
+}
+
+.register-form {
+    grid-column: 2 / -1;
     justify-content: left;
+    margin: 50px;
+}
+
+.register-form h4 {
+    position: relative;
+    left: -12.5px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.register-form form #email, #pword, #cpword {
+    width: 250px;
+    height: 18px;
+    border-style: solid;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+
+.register-form form #small-text {
+    font-size: 12px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.register-form form #submit {
+    font-size: 12px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    width: 175px;
+    margin: 5px;
+}
+
+.error-handler {
+    position: relative;
+}
+
+.error-message {
+    position: absolute;
+    font-size: 12px;
+    width: 250px;
+    height: 100px;
+    color: red;
+    top: 20px;
 }
 
 .results-list {
@@ -81,10 +141,6 @@ a:hover {
     border: 1px solid black;
     padding: 25px;
     height: 250px;
-}
-
-.form-control {
-    padding: 50px;
 }
 
 .amen {
@@ -182,20 +238,6 @@ a:hover {
     border-style: solid;
 }
 
-.form-button {
-    margin: 60px;
-    width: 150px;
-    height: 55px;
-    border-radius: 100px;
-    border-style: none;
-    color: white;
-    font-size: 16px;
-    text-transform: uppercase;
-    background-color: black;
-    opacity: 0.9;
-    font-weight: 900;
-}
-
 .form-btn {
     width: 1000px;
 }
@@ -224,16 +266,30 @@ a:hover {
 .login-form {
     display: flex;
     justify-content: left;
-    padding: 20px;
+    padding: 5px;
+    width: 500px;
+    height: 50px;
 }
 
 .login-form input {
     border-style: solid;
     padding: 5px;
+    margin: 10px;
     border-radius: 5px;
 }
 
-.login-form #login-btn {
+.welcome-login {
+    text-align: center;
+    padding: 5px;
+    width: 500px;
+    height: 50px;
+}
+
+.welcome-login p {
+    font-size: 15px;
+}
+
+.submit-btn {
     position: relative;
     margin-left: 2px;
     width: 100px;
@@ -242,7 +298,7 @@ a:hover {
     border-style: solid;
 }
 
-.login-form #login-btn:hover {
+.submit-btn:hover {
     color: white;
     background-color: burlywood;
     border: 0px;
@@ -250,11 +306,11 @@ a:hover {
     border-style: solid;
 }
 
-.nav-search {
+.search-form {
     height: 20px;
 }
 
-.nav-search #location {
+.search-form #location {
     width: 450px;
     height: 18px;
     border-style: solid;
@@ -262,7 +318,7 @@ a:hover {
     border-radius: 5px;
 }
 
-.nav-search #date {
+.search-form #date {
     width: 200px;
     height: 18px;
     border-style: solid;
@@ -270,7 +326,7 @@ a:hover {
     border-radius: 5px;
 }
 
-.nav-search #search-btn {
+.search-form #search-btn {
     position: relative;
     margin-left: 30px;
     top: 2px;
@@ -280,15 +336,7 @@ a:hover {
     border-style: solid;
 }
 
-.nav-search #search-btn:hover {
-    color: white;
-    background-color: burlywood;
-    border: 0px;
-    border-radius: 5px;
-    border-style: solid;
-}
-
-.nav-search p {
+.search-form p {
     margin-left: 10px;
 }
 
@@ -299,7 +347,7 @@ a:hover {
     width: 423px;
     padding-left: 0px;
     padding-top: 5px;
-    top: 163px;
+    top: 180px;
     border-radius: 5px;
 }
 
@@ -479,13 +527,12 @@ a:hover {
     z-index: 9999;
 }
 
-.secondary-content .grid-promo {
+.grid-promo {
     /* border: 5px solid black; */
     justify-content: center;
     margin: auto;
     margin-top: 75px;
     margin-bottom: 75px;
-
 }
 
 /* .grid-promo img {

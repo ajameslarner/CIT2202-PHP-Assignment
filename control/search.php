@@ -13,7 +13,3 @@ if(isset($_POST["query"])){
     echo $out;
 }
 ?>
-
-
-
-<!--  ---- backup qry -->

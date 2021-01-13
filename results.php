@@ -2,7 +2,7 @@
 
 if (isset($_GET["location"])){
 //Include connection request
-include 'connect.php';
+include 'control/connect.php';
 //Allocate form input variables
 //$location = $_GET["location"];
 $date = $_GET["date"];
@@ -18,13 +18,21 @@ $date = $_GET["date"];
 // use the result from the query below to output which ammenities are associated with that result.
 
 //prepared statement
-$stmt = $conn->prepare("SELECT hotels.id AS hotel, hotels.* FROM hotels INNER JOIN locations ON locations.id = hotels.location_id AND locations.location LIKE ?");
+$stmt = $conn2->prepare("SELECT hotels.id AS hotel, hotels.* FROM hotels INNER JOIN locations ON locations.id = hotels.location_id AND locations.location LIKE ?");
 $stmt->execute([
     "%".$_GET["location"]."%"
 ]);
 $res=$stmt->fetchAll();
-$conn=NULL;
+$conn2=NULL;
 }
+$protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
+    
+$host = $_SERVER['HTTP_HOST'];
+$script = $_SERVER['SCRIPT_NAME'];
+
+session_start();
+$_SESSION["page"] = $protocol . '://' . $host . $script;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,42 +50,66 @@ $conn=NULL;
 <body>
 <section class="nav-content">
         <div class="logo-container">
-            <a href="index.html"><img src="img/logo.png" alt="Kirklees Hotels Logo"></a>
+            <a href="index.php"><img src="img/logo.png" alt="Kirklees Hotels Logo"></a>
         </div>
         <div class="nav-first">
             <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="register.html">Register</a></li>
-            </ul>
+                <li><a href="index.php">Home</a></li>
+                <li><a href="about.php">About</a></li>
+                <?php
+                if (isset($_SESSION["idSession"])){
+                    echo '<li><a href="dashboard.php">Profile</a></li>';
+                    echo '<li><a href="control/logout.php">Logout</a></li>';
+                    echo '</ul>';
+                    echo '</div>';
+                    echo '<div class="welcome-login">';
+                    echo '<p>Welcome, '.$_SESSION["emailSession"].'</p>';
+                    echo '</div>';
+                } else {
+                    echo '<li><a href="register.php">Register</a></li>';
+                    echo '</ul>';
+                    echo '</div>';
+                    echo '<div class="login-form">';
+                    echo '<form action="control/login.php" method="POST">';
+                    echo '<input type="text" name="email" placeholder="email">';
+                    echo '<input type="password" name="password" placeholder="password">';
+                    echo '<input type="submit" class="submit-btn" name="submit" id="submit" value="Login"><br>';
+                    echo '<a href="pw-reset.html">Forgot your password?</a>';
+                    echo '<a href="pw-reset.html">Create account</a>';
+                    echo '<div class="error-handler">';
+                    if (isset($_GET["op"])) {
+                        if ($_GET["op"] == "emptyLogin") {
+                            echo '<span class="error-message">You have missed a field!</span>';
+                        } else if ($_GET["op"] == "incorrectEmail") {
+                            echo '<span class="error-message">You have entered an invalid email address!</span>';
+                        } else if ($_GET["op"] == "incorrectPassword") {
+                            echo '<span class="error-message">You have entered an invalid password!</span>';
+                        }
+                    }
+                    echo '</div>';
+                    echo '</form>';
+                    echo '</div>';
+                }
+                ?>
         </div>
-        <div class="login-form">
-            <form method="POST">
-                <input type="text" placeholder="username">
-                <input type="text" placeholder="password">
-                <input type="submit" id="login-btn" value="Login"><br>
-                <a href="pw-reset.html">Forgot your password?</a>
-                <a href="pw-reset.html">Create account</a>
-            </form>
-        </div>
-        <div class="nav-search">
-            <form action="location.php" method="GET">
+        <div class="search-form">
+            <form action="results.php" method="GET">
                 <p>Search for hotels in the Kirklees area today!</p>
                 <input type="text" name="location" id="location" placeholder="Search for hotels in your area..." autocomplete="off" required>
                 <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
                 </div>
         </div>
-        <div class="nav-search">
+        <div class="search-form">
             <p>Choose a start date!</p>
             <input type="date" name="date" id="date">
-            <input type="submit" id="search-btn" value="Go!">
+            <input type="submit" class="submit-btn" id="submit" value="Go!">
         </div>
             </form>
         <div class="nav-second">
             <ul>
-                <a href="location.php"><li>Amenities</li></a>
-                <a href="location.php"><li>Hotel Styles</li></a>
-                <a href="location.php"><li>Locations</li></a>
+                <a href="details.php"><li>Amenities</li></a>
+                <a href="details.php"><li>Hotel Styles</li></a>
+                <a href="details.php"><li>Locations</li></a>
             </ul>
         </div>
         <div class="nav-third">
@@ -209,14 +241,13 @@ $conn=NULL;
             <p>Copyright © 2020 Kirklees Hotels | Development: Anthony James Larner</p>
         </div>
     </body>
-    </html>
     <script>
     $(document).ready(function() {
         $('#location').keyup(function() {
             var query = $(this).val();
             if (query != '') {
                 $.ajax({
-                    url:"search.php",
+                    url:"control/search.php",
                     method: "POST",
                     data: {query:query},
                     success: function(data){
@@ -233,4 +264,5 @@ $conn=NULL;
            $('#location-list').fadeOut();
         })
     });
-</script>
+    </script>
+    </html>
