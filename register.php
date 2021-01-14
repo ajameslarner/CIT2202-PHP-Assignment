@@ -7,6 +7,11 @@ $script = $_SERVER['SCRIPT_NAME'];
 session_start();
 $_SESSION["page"] = $protocol . '://' . $host . $script;
 
+if (isset($_SESSION["idSession"])){
+    header('Location: index.php');
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -32,10 +37,12 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                 <li><a href="index.php">Home</a></li>
                 <li><a href="#">About</a></li>
                 <?php
-                if (isset($_SESSION["idSession"])){
-                    echo '<li><a href="dashboard.php">Listing</a></li>';
+                if (isset($_SESSION["idSession"]) && $_SESSION["idRole"] === 2){
+                    echo '<li><a href="dashboard.php">Listings</a></li>';
                     echo '</ul>';
                     echo '</div>';
+                }
+                if (isset($_SESSION["idSession"])) {
                     echo '<div class="welcome-login">'; 
                     echo '<p>Welcome, '.$_SESSION["emailSession"].'(<a href="control/logout.php">Logout</a>)</p>';
                     echo '</div>';
@@ -64,16 +71,22 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                     echo '</form>';
                     echo '</div>';
                 }
+
                 ?>
-        </div>
-        <div class="search-form">
-            <form action="results.php" method="GET">
-                <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>
-                <input type="submit" class="search-btn" id="submit" value="Go!">
-                <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
                 </div>
-            </form>
+                <div class="search-form">
+                <?php
+
+                if (isset($_SESSION["idSession"])) {
+                    echo '<form action="results.php" method="GET">';
+                    echo '<p>Search for hotels in the Kirklees area today!</p>';
+                    echo '<input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>';
+                    echo '<input type="submit" class="search-btn" id="submit" value="Go!">';
+                    echo '<div id="location-list" onclick="document.getElementById("location").focus(); return false;">';
+                    echo '</div>';
+                    echo '</form>';
+                }
+                ?>
         </div>
         <div class="nav-second">
             <ul>
@@ -157,7 +170,7 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
             var query = $(this).val();
             if (query != '') {
                 $.ajax({
-                    url:"control/search.php",
+                    url:"control/functions.php",
                     method: "POST",
                     data: {query:query},
                     success: function(data){

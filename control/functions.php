@@ -87,8 +87,8 @@ function passwordValidation($pword) {
     return $result;
 }
 
-function addUser($conn, $email, $pword) {
-    $sql = "INSERT INTO users (email, password) VALUES (?, ?)";
+function addUser($conn, $email, $pword, $role) {
+    $sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)) {
         header("location: ../register.php?op=dbError");
@@ -97,7 +97,7 @@ function addUser($conn, $email, $pword) {
 
     $hashedPword = password_hash($pword, PASSWORD_DEFAULT);
 
-    mysqli_stmt_bind_param($stmt, "ss", $email, $hashedPword);
+    mysqli_stmt_bind_param($stmt, "ssi", $email, $hashedPword, $role);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     header("location: ../register.php?op=success");
@@ -164,9 +164,25 @@ function loginUser($conn, $email, $pword) {
 
         $_SESSION["idSession"] = $uExists["id"];
         $_SESSION["emailSession"] = $uExists["email"];
+        $_SESSION["idRole"] = $uExists["role"];
         header('Location: ' . $_SESSION["page"] . '?op=success');
         exit();
     }
+}
+
+require_once 'connect.php';
+
+if(isset($_POST["query"])){
+    $qry = "SELECT * FROM locations WHERE location LIKE '%".$_POST["query"]."%'";
+    $res = mysqli_query($conn, $qry);
+    $out = '<ul class="auto-list">';
+    if (mysqli_num_rows($res)>0){
+        while($row = mysqli_fetch_array($res)){
+            $out .= '<a href="#"><li id="auto-item">'.$row["location"].'</li></a>'; 
+        }
+    }
+    $out .= '</ul>';
+    echo $out;
 }
 
 ?>

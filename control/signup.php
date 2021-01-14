@@ -6,6 +6,8 @@ if (isset($_POST["submit"])) {
     $pword = $_POST["pword"];
     $cpword = $_POST["cpword"];
     $terms = $_POST["terms"];
+    
+    $role = 1;
 
     require_once 'connect.php';
     require_once 'functions.php';
@@ -35,7 +37,7 @@ if (isset($_POST["submit"])) {
         exit();
     }
 
-    addUser($conn, $email, $pword);
+    addUser($conn, $email, $pword, $role);
 
 } else {
     header("location: ../register.php");

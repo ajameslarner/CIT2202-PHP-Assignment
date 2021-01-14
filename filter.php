@@ -10,8 +10,6 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
 
 if (!isset($_SESSION["idSession"])){
     header('Location: index.php');
-} else if ($_SESSION["idRole"] !== 2){
-    header('Location: index.php');
 }
 
 
@@ -106,37 +104,36 @@ if (!isset($_SESSION["idSession"])){
         </div>
     </section>
     <section class="primary-content">
-    <div class="grid-item-header">
-            <h1>Create <span>your</span> listing</h1>
-            <p>Welcome to Kirklees Hotels</p>
-        </div>
     <div class="grid-content">
     <div class="insert-form">
-                <form action="control/insert.php" method="POST">
-                    <h4>Hotel Registration Form</h4>          
-                    <input type="text" name="name" id="name" placeholder="Your hotel name..." required><br>
-                    <input type="number" name="price" id="price" placeholder="Price per night..." required><br>
-                    <span id="small-text">Check-in:</span><br><input type="time" name="checkin" id="checkin"><br><span id="small-text">Check-out:</span><br><input type="time" name="checkout" id="checkout"><br>
+                    <h4>Advanced Search Form</h4>
+                    <form action="results.php" method="GET">      
                     <select name="location" id="location">
                         <option value="" disabled selected>Hotel Location</option>
-                        <option value="1">Batley</option> 
-                        <option value="2">Colne Valley</option> 
-                        <option value="3">Denby Dale</option> 
-                        <option value="4">Holme Valley</option> 
-                        <option value="5">Huddersfield East</option>
-                        <option value="6">Huddersfield West</option> 
-                        <option value="7">Kirkburton</option> 
-                        <option value="8">Mirfield</option> 
-                        <option value="9">Spen Valley and Heckmondwike</option> 
-                    </select><br>
+                        <option value="Batley">Batley</option> 
+                        <option value="Colne Valley">Colne Valley</option> 
+                        <option value="Denby Dale">Denby Dale</option> 
+                        <option value="Holme Valley">Holme Valley</option> 
+                        <option value="Huddersfield East">Huddersfield East</option>
+                        <option value="Huddersfield West">Huddersfield West</option> 
+                        <option value="Kirkburton">Kirkburton</option> 
+                        <option value="Mirfield">Mirfield</option> 
+                        <option value="Spen Valley and Heckmondwike">Spen Valley and Heckmondwike</option> 
+                    </select>
+                    <input type="submit" class="submit-btn" name="submit" id="submit" value="Search">
+                    </form>
+                    <form action="results.php" method="GET"> 
                     <select name="stars" id="stars">
                         <option value="" disabled selected>Hotel Stars</option>
                         <option value="1">1</option> 
                         <option value="2">2</option> 
                         <option value="3">3</option> 
                         <option value="4">4</option> 
-                        <option value="5">5</option> 
-                    </select><br>
+                        <option value="5">5</option>
+                    </select>
+                    <input type="submit" class="submit-btn" name="submit" id="submit" value="Search">
+                    </form>
+                    <form action="POST">
                     <select name="style" id="style">
                         <option value="" disabled selected>Hotel Style</option>
                         <option value="1">Boutique</option> 
@@ -144,7 +141,11 @@ if (!isset($_SESSION["idSession"])){
                         <option value="3">Business</option> 
                         <option value="4">Historic</option> 
                         <option value="5">Luxury</option>
-                    </select><br>
+                    </select>
+                    <input type="submit" class="submit-btn" name="submit" id="submit" value="Search">
+                    </form>
+                    <form action="">
+                    <br>
                     <h3>Select your hotels Amenities</h3><br>
                     <input type="checkbox" name="amen[]" id="wifi" class="hidden" value="1" ><label for="wifi" id="wifitoggle" class="amenity-inactive" onclick="toggle('wifitoggle')"><span title="Free WiFI"><i class="fas fa-wifi"></i></span></label>
                     <input type="checkbox" name="amen[]" id="pool" class="hidden" value="2"><label for="pool" id="pooltoggle" class="amenity-inactive" onclick="toggle('pooltoggle')"><span title="Swimming Pool"><i class="fas fa-swimming-pool"></i></span></label>
@@ -157,7 +158,7 @@ if (!isset($_SESSION["idSession"])){
                     <input type="checkbox" name="amen[]" id="pets" class="hidden" value="9"><label for="pets" id="petstoggle" class="amenity-inactive" onclick="toggle('petstoggle')"><span title="Pets"><i class="fas fa-paw"></i></span></label>
                     <input type="checkbox" name="amen[]" id="hour" class="hidden" value="10"><label for="hour" id="hourtoggle" class="amenity-inactive" onclick="toggle('hourtoggle')"><span title="24-hour Reception"><i class="fas fa-concierge-bell"></i></span></label>
                     <br><br><br>
-                    <input type="submit" class="submit-btn" name="submit" id="submit" value="Submit"><br><br>
+                    <input type="submit" class="submit-btn" name="submit" id="submit" value="Search"><br><br>
                     <div class="error-handler">
                     <?php
                     if (isset($_GET["op"])) {
@@ -171,7 +172,7 @@ if (!isset($_SESSION["idSession"])){
                     }
                     ?>
                     </div>
-                </form>
+                    </form>
             </div>
     </div>
     </section>

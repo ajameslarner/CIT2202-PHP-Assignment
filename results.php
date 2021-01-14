@@ -1,27 +1,4 @@
 <?php
-
-// if (isset($_GET["location"])){
-// //Include connection request
-// include 'control/connect.php';
-// //Allocate form input variables
-// //$location = $_GET["location"];
-// $date = $_GET["date"];
-
-//SELECT * FROM hotels left Join amenity_hotel on amenity_hotel.hotel_id = hotels.id left join amenities on amenities.id = amenity_hotel.amenity_id WHERE hotels.id = 1
-
-//NOTES FOR TOMORROW
-
-// query complete below to output hotel id for us to identify which amenities are associated with that hotel id
-
-// query above gives us the amenities associated with the hotel id
-
-// use the result from the query below to output which ammenities are associated with that result.
-
-//prepared statement
-
-
-
-
 $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
     
 $host = $_SERVER['HTTP_HOST'];
@@ -29,6 +6,10 @@ $script = $_SERVER['SCRIPT_NAME'];
 
 session_start();
 $_SESSION["page"] = $protocol . '://' . $host . $script;
+
+if (!isset($_SESSION["idSession"])){
+    header('Location: index.php');
+}
 
 ?>
 <!DOCTYPE html>
@@ -54,10 +35,12 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                 <li><a href="index.php">Home</a></li>
                 <li><a href="#">About</a></li>
                 <?php
-                if (isset($_SESSION["idSession"])){
-                    echo '<li><a href="dashboard.php">Listing</a></li>';
+                if (isset($_SESSION["idSession"]) && $_SESSION["idRole"] === 2){
+                    echo '<li><a href="dashboard.php">Listings</a></li>';
                     echo '</ul>';
                     echo '</div>';
+                }
+                if (isset($_SESSION["idSession"])) {
                     echo '<div class="welcome-login">'; 
                     echo '<p>Welcome, '.$_SESSION["emailSession"].'(<a href="control/logout.php">Logout</a>)</p>';
                     echo '</div>';
@@ -86,16 +69,22 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                     echo '</form>';
                     echo '</div>';
                 }
+
                 ?>
-        </div>
-        <div class="search-form">
-            <form action="results.php" method="GET">
-                <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>
-                <input type="submit" class="search-btn" id="submit" value="Go!">
-                <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
                 </div>
-            </form>
+                <div class="search-form">
+                <?php
+
+                if (isset($_SESSION["idSession"])) {
+                    echo '<form action="results.php" method="GET">';
+                    echo '<p>Search for hotels in the Kirklees area today!</p>';
+                    echo '<input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>';
+                    echo '<input type="submit" class="search-btn" id="submit" value="Go!">';
+                    echo '<div id="location-list" onclick="document.getElementById("location").focus(); return false;">';
+                    echo '</div>';
+                    echo '</form>';
+                }
+                ?>
         </div>
         <div class="nav-second">
             <ul>
@@ -238,7 +227,7 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
             var query = $(this).val();
             if (query != '') {
                 $.ajax({
-                    url:"control/search.php",
+                    url:"control/functions.php",
                     method: "POST",
                     data: {query:query},
                     success: function(data){
