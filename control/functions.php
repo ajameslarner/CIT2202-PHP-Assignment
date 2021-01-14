@@ -1,5 +1,6 @@
 <?php
 
+//Error Validation
 function emptyInput($email, $pword, $cpword) {
     $result;
     if (empty($email) || empty($pword) || empty($cpword)) {
@@ -9,7 +10,7 @@ function emptyInput($email, $pword, $cpword) {
     }
     return $result;
 }
-
+//Error Validation
 function emptyInputHotel($name, $price, $checkin, $checkout, $location, $stars, $style, $amenities) {
     $result;
     if (empty($name) || empty($price) || empty($checkin) || empty($checkout) || empty($location) || empty($stars) || empty($style) || empty($amenities)) {
@@ -19,7 +20,7 @@ function emptyInputHotel($name, $price, $checkin, $checkout, $location, $stars, 
     }
     return $result;
 }
-
+//Error Validation
 function invalidInput($email) {
     $result;
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -29,7 +30,7 @@ function invalidInput($email) {
     }
     return $result;
 }
-
+//Error Validation
 function inputMatching($pword, $cpword) {
     $result;
     if ($pword !== $cpword) {
@@ -39,7 +40,7 @@ function inputMatching($pword, $cpword) {
     }
     return $result;
 }
-
+//Error Validation
 function termsEmpty($terms) {
     $result;
     if(empty($terms)) {
@@ -49,7 +50,7 @@ function termsEmpty($terms) {
         }
     return $result;
 }
-
+//Error Validation
 function inputExists($conn, $email) {
     $sql = "SELECT * FROM users WHERE email = ?;";
     $stmt = mysqli_stmt_init($conn);
@@ -73,7 +74,7 @@ function inputExists($conn, $email) {
 
     mysqli_stmt_close($stmt);
 }
-
+//Error Validation
 function passwordValidation($pword) {
     $result;
     //The search algorithm to validate the password
@@ -86,7 +87,7 @@ function passwordValidation($pword) {
     }
     return $result;
 }
-
+//Insert New User
 function addUser($conn, $email, $pword, $role) {
     $sql = "INSERT INTO users (email, password, role) VALUES (?, ?, ?)";
     $stmt = mysqli_stmt_init($conn);
@@ -103,7 +104,7 @@ function addUser($conn, $email, $pword, $role) {
     header("location: ../register.php?op=success");
     exit();
 }
-
+//Error Validation
 function emptyLogin($email, $pword) {
     $result;
     if (empty($email) || empty($pword)) {
@@ -113,7 +114,7 @@ function emptyLogin($email, $pword) {
     }
     return $result;
 }
-
+//Insert New Hotel
 function insertHotel($conn, $name, $price, $checkin, $checkout, $location, $stars, $style, $amenities) {
     $sql = "INSERT INTO hotels (name, price, check_in, check_out, location_id, stars, style_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
     $stmt = mysqli_stmt_init($conn);
@@ -144,7 +145,7 @@ function insertHotel($conn, $name, $price, $checkin, $checkout, $location, $star
         exit();
     }
 }
-
+//Log user in
 function loginUser($conn, $email, $pword) {
     $uExists = inputExists($conn, $email);
 
@@ -170,6 +171,7 @@ function loginUser($conn, $email, $pword) {
     }
 }
 
+//Dropdown autocomplete
 require_once 'connect.php';
 
 if(isset($_POST["query"])){

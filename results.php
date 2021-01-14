@@ -1,16 +1,16 @@
 <?php
-$protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
-    
+//Deconstruct URL for the header in functions ("www" "://" "current-page.php") - Removing the assigned GET variable
+$protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https'; 
 $host = $_SERVER['HTTP_HOST'];
 $script = $_SERVER['SCRIPT_NAME'];
 
 session_start();
 $_SESSION["page"] = $protocol . '://' . $host . $script;
 
+//Check session active
 if (!isset($_SESSION["idSession"])){
     header('Location: index.php');
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -88,9 +88,49 @@ if (!isset($_SESSION["idSession"])){
         </div>
         <div class="nav-second">
             <ul>
-                <a href="#"><li>Amenities</li></a>
-                <a href="#"><li>Hotel Styles</li></a>
-                <a href="#"><li>Locations</li></a>
+                <li>
+                <form action="results.php" method="GET">      
+                    <select name="location" id="location" required>
+                        <option value="" disabled selected>Hotel Location</option>
+                        <option value="Batley">Batley</option> 
+                        <option value="Colne Valley">Colne Valley</option> 
+                        <option value="Denby Dale">Denby Dale</option> 
+                        <option value="Holme Valley">Holme Valley</option> 
+                        <option value="Huddersfield East">Huddersfield East</option>
+                        <option value="Huddersfield West">Huddersfield West</option> 
+                        <option value="Kirkburton">Kirkburton</option> 
+                        <option value="Mirfield">Mirfield</option> 
+                        <option value="Spen Valley and Heckmondwike">Spen Valley and Heckmondwike</option> 
+                    </select>
+                <input type="submit" class="submit-btn" name="submit" id="submit" value="Filter">
+                </form>
+                </li>
+                <li>
+                <form action="results.php" method="GET"> 
+                    <select name="stars" id="stars" required>
+                        <option value="" disabled selected>Hotel Stars</option>
+                        <option value="1">1</option> 
+                        <option value="2">2</option> 
+                        <option value="3">3</option> 
+                        <option value="4">4</option> 
+                        <option value="5">5</option>
+                    </select>
+                <input type="submit" class="submit-btn" name="submit" id="submit" value="Filter">
+                </form>
+                </li>
+                <li>
+                <form action="results.php" method="GET"> 
+                    <select name="style" id="style" required>
+                        <option value="" disabled selected>Hotel Style</option>
+                        <option value="Boutique">Boutique</option> 
+                        <option value="Budget">Budget</option> 
+                        <option value="Business">Business</option> 
+                        <option value="Historic">Historic</option> 
+                        <option value="Luxury">Luxury</option>
+                </select>
+                <input type="submit" class="submit-btn" name="submit" id="submit" value="Filter">
+                </form>
+                </li>
             </ul>
         </div>
         <div class="nav-third">
@@ -104,11 +144,8 @@ if (!isset($_SESSION["idSession"])){
     <section class="primary-content">
         <?php
         echo '<div class="results-list">';
-        if(isset($_GET["location"])) {
+        if (isset($_GET["location"]) || isset(($_GET["stars"])) || isset(($_GET["style"]))) {
             require_once 'control/queries.php';
-            echo '<div class="grid-item-header">';
-            echo '<h1>Search Results for "'.$_GET["location"].'"</h1>';
-            echo '</div>';
             if (count($resultsHotels)>0) {
                 foreach ($resultsHotels as $r) {
                     echo '<div class="result-content">';

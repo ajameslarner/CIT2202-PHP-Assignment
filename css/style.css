@@ -335,6 +335,7 @@ a:hover {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 10px;
     width: 1250px;
+    height: 280px;
     margin: auto;
     display: grid;
     grid-template-columns: auto auto auto;
@@ -346,7 +347,7 @@ a:hover {
 
 .login-form {
     position: relative;
-    left: 150px;
+    left: 300px;
     display: flex;
     justify-content: left;
     padding: 5px;
@@ -369,6 +370,9 @@ a:hover {
 }
 
 .welcome-login {
+    position: absolute;
+    left: 30px;
+    top: 60px;
     text-align: center;
     padding: 5px;
     width: 500px;
@@ -376,7 +380,7 @@ a:hover {
 }
 
 .welcome-login p {
-    font-size: 15px;
+    font-size: 18px;
 }
 
 .submit-btn {
@@ -499,22 +503,26 @@ a:hover {
 }
 
 .nav-second ul {
-    display: flex;
+    position: absolute;
+    left: 930px;
+    top: 130px;
     float: right;
     justify-content: right;
 }
 
-.nav-second a {
-    text-decoration: none;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    text-transform: uppercase;
+.nav-second ul li {
     list-style-type: none;
+}
+
+.nav-second ul li select{
     text-align: center;
-    font-size: 15px;
-    color: black;
-    width: auto;
+    margin: 50px;
+    width: 150px;
     height: auto;
-    padding: 20px;
+    border-style: solid;
+    padding: 5px;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 .nav-second a:hover {

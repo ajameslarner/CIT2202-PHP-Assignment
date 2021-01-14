@@ -1,13 +1,11 @@
 <?php
-
+//Deconstruct URL for the header in functions ("www" "://" "current-page.php") - Removing the assigned GET variable
 $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
-    
 $host = $_SERVER['HTTP_HOST'];
 $script = $_SERVER['SCRIPT_NAME'];
 
 session_start();
 $_SESSION["page"] = $protocol . '://' . $host . $script;
-
 ?>
 
 <!DOCTYPE html>
@@ -84,13 +82,7 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                 }
                 ?>
         </div>
-        <div class="nav-second">
-            <ul>
-                <a href="#"><li>Amenities</li></a>
-                <a href="#"><li>Hotel Styles</li></a>
-                <a href="#"><li>Locations</li></a>
-            </ul>
-        </div>
+
         <div class="nav-third">
             <ul>
                 <a href="#"><li><i class="fab fa-twitter-square"></i></li></a>

@@ -1,20 +1,20 @@
 <?php
-$protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
-    
+//Deconstruct URL for the header in functions ("www" "://" "current-page.php") - Removing the assigned GET variable
+$protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https'; 
 $host = $_SERVER['HTTP_HOST'];
 $script = $_SERVER['SCRIPT_NAME'];
 
 session_start();
 $_SESSION["page"] = $protocol . '://' . $host . $script;
 
-
+//Check session active
 if (!isset($_SESSION["idSession"])){
     header('Location: index.php');
+
+//Check session role
 } else if ($_SESSION["idRole"] !== 2){
     header('Location: index.php');
 }
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -89,13 +89,6 @@ if (!isset($_SESSION["idSession"])){
                     echo '</form>';
                 }
                 ?>
-        </div>
-        <div class="nav-second">
-            <ul>
-                <a href="#"><li>Amenities</li></a>
-                <a href="#"><li>Hotel Styles</li></a>
-                <a href="#"><li>Locations</li></a>
-            </ul>
         </div>
         <div class="nav-third">
             <ul>

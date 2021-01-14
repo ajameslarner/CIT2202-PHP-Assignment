@@ -1,5 +1,6 @@
 <?php
 
+//Signup functions
 if (isset($_POST["submit"])) {
 
     $email = $_POST["email"];
