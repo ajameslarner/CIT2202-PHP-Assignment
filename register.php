@@ -30,15 +30,14 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <div class="nav-first">
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About</a></li>
+                <li><a href="#">About</a></li>
                 <?php
                 if (isset($_SESSION["idSession"])){
-                    echo '<li><a href="dashboard.php">Profile</a></li>';
-                    echo '<li><a href="control/logout.php">Logout</a></li>';
+                    echo '<li><a href="dashboard.php">Listing</a></li>';
                     echo '</ul>';
                     echo '</div>';
-                    echo '<div class="welcome-login">';
-                    echo '<p>Welcome, '.$_SESSION["emailSession"].'</p>';
+                    echo '<div class="welcome-login">'; 
+                    echo '<p>Welcome, '.$_SESSION["emailSession"].'(<a href="control/logout.php">Logout</a>)</p>';
                     echo '</div>';
                 } else {
                     echo '<li><a href="register.php">Register</a></li>';
@@ -49,8 +48,8 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                     echo '<input type="text" name="email" placeholder="email">';
                     echo '<input type="password" name="password" placeholder="password">';
                     echo '<input type="submit" class="submit-btn" name="submit" id="submit" value="Login"><br>';
-                    echo '<a href="pw-reset.html">Forgot your password?</a>';
-                    echo '<a href="pw-reset.html">Create account</a>';
+                    echo '<a href="register.php">Create account</a>';
+                    echo '<a href="#">Forgot your password?</a>'; 
                     echo '<div class="error-handler">';
                     if (isset($_GET["op"])) {
                         if ($_GET["op"] == "emptyLogin") {
@@ -70,21 +69,17 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <div class="search-form">
             <form action="results.php" method="GET">
                 <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" name="location" id="location" placeholder="Search for hotels in your area..." autocomplete="off" required>
+                <input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>
+                <input type="submit" class="search-btn" id="submit" value="Go!">
                 <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
                 </div>
-        </div>
-        <div class="search-form">
-            <p>Choose a start date!</p>
-            <input type="date" name="date" id="date">
-            <input type="submit" class="submit-btn" id="submit" value="Go!">
-        </div>
             </form>
+        </div>
         <div class="nav-second">
             <ul>
-                <a href="details.php"><li>Amenities</li></a>
-                <a href="details.php"><li>Hotel Styles</li></a>
-                <a href="details.php"><li>Locations</li></a>
+                <a href="#"><li>Amenities</li></a>
+                <a href="#"><li>Hotel Styles</li></a>
+                <a href="#"><li>Locations</li></a>
             </ul>
         </div>
         <div class="nav-third">
@@ -129,6 +124,8 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                             echo '<span class="error-message">You account has been registered!</span>';
                         } else if ($_GET["op"] == "dbError") {
                             echo '<span class="error-message">Something went wrong! Please try again.</span>';
+                        } else if ($_GET["op"] == "termsEmpty") {
+                            echo '<span class="error-message">Please accept the terms.</span>';
                         }
                     }
                     ?>
@@ -137,9 +134,6 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
             </div>
         </div>
     </section>
-
-
-
     <section class="tertiary-content">
         <div class="grid-footer">
             <div class="footer-content">

@@ -1,5 +1,7 @@
 <?php
-$conn = mysqli_connect("localhost","root","","kirklees-hotel");
+
+require_once 'connect.php';
+
 if(isset($_POST["query"])){
     $qry = "SELECT * FROM locations WHERE location LIKE '%".$_POST["query"]."%'";
     $res = mysqli_query($conn, $qry);

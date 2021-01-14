@@ -1,5 +1,6 @@
 <?php
 
+//MySQLI Method
 $serverName = "localhost";
 $dBUser = "root";
 $dBPass = "";
@@ -11,9 +12,10 @@ if (!$conn) {
 	die("Connection Error: " . mysqli_connect_error());
 }
 
+//PDO Method 
 try {
-	$conn2 = new PDO('mysql:host=localhost;dbname=kirklees-hotel', 'root', '');
-	$conn2->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+	$connPDO = new PDO('mysql:host=localhost;dbname=kirklees-hotel', 'root', '');
+	$connPDO->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
 }
 catch (PDOException $exception)
 {

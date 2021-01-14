@@ -1,11 +1,11 @@
 <?php
 
-if (isset($_GET["location"])){
-//Include connection request
-include 'control/connect.php';
-//Allocate form input variables
-//$location = $_GET["location"];
-$date = $_GET["date"];
+// if (isset($_GET["location"])){
+// //Include connection request
+// include 'control/connect.php';
+// //Allocate form input variables
+// //$location = $_GET["location"];
+// $date = $_GET["date"];
 
 //SELECT * FROM hotels left Join amenity_hotel on amenity_hotel.hotel_id = hotels.id left join amenities on amenities.id = amenity_hotel.amenity_id WHERE hotels.id = 1
 
@@ -18,13 +18,10 @@ $date = $_GET["date"];
 // use the result from the query below to output which ammenities are associated with that result.
 
 //prepared statement
-$stmt = $conn2->prepare("SELECT hotels.id AS hotel, hotels.* FROM hotels INNER JOIN locations ON locations.id = hotels.location_id AND locations.location LIKE ?");
-$stmt->execute([
-    "%".$_GET["location"]."%"
-]);
-$res=$stmt->fetchAll();
-$conn2=NULL;
-}
+
+
+
+
 $protocol = strpos(strtolower($_SERVER['SERVER_PROTOCOL']),'https') === FALSE ? 'http' : 'https';
     
 $host = $_SERVER['HTTP_HOST'];
@@ -55,15 +52,14 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <div class="nav-first">
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About</a></li>
+                <li><a href="#">About</a></li>
                 <?php
                 if (isset($_SESSION["idSession"])){
-                    echo '<li><a href="dashboard.php">Profile</a></li>';
-                    echo '<li><a href="control/logout.php">Logout</a></li>';
+                    echo '<li><a href="dashboard.php">Listing</a></li>';
                     echo '</ul>';
                     echo '</div>';
-                    echo '<div class="welcome-login">';
-                    echo '<p>Welcome, '.$_SESSION["emailSession"].'</p>';
+                    echo '<div class="welcome-login">'; 
+                    echo '<p>Welcome, '.$_SESSION["emailSession"].'(<a href="control/logout.php">Logout</a>)</p>';
                     echo '</div>';
                 } else {
                     echo '<li><a href="register.php">Register</a></li>';
@@ -74,8 +70,8 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                     echo '<input type="text" name="email" placeholder="email">';
                     echo '<input type="password" name="password" placeholder="password">';
                     echo '<input type="submit" class="submit-btn" name="submit" id="submit" value="Login"><br>';
-                    echo '<a href="pw-reset.html">Forgot your password?</a>';
-                    echo '<a href="pw-reset.html">Create account</a>';
+                    echo '<a href="register.php">Create account</a>';
+                    echo '<a href="#">Forgot your password?</a>'; 
                     echo '<div class="error-handler">';
                     if (isset($_GET["op"])) {
                         if ($_GET["op"] == "emptyLogin") {
@@ -95,21 +91,17 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <div class="search-form">
             <form action="results.php" method="GET">
                 <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" name="location" id="location" placeholder="Search for hotels in your area..." autocomplete="off" required>
+                <input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>
+                <input type="submit" class="search-btn" id="submit" value="Go!">
                 <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
                 </div>
-        </div>
-        <div class="search-form">
-            <p>Choose a start date!</p>
-            <input type="date" name="date" id="date">
-            <input type="submit" class="submit-btn" id="submit" value="Go!">
-        </div>
             </form>
+        </div>
         <div class="nav-second">
             <ul>
-                <a href="details.php"><li>Amenities</li></a>
-                <a href="details.php"><li>Hotel Styles</li></a>
-                <a href="details.php"><li>Locations</li></a>
+                <a href="#"><li>Amenities</li></a>
+                <a href="#"><li>Hotel Styles</li></a>
+                <a href="#"><li>Locations</li></a>
             </ul>
         </div>
         <div class="nav-third">
@@ -124,45 +116,44 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <?php
         echo '<div class="results-list">';
         if(isset($_GET["location"])) {
+            require_once 'control/queries.php';
             echo '<div class="grid-item-header">';
             echo '<h1>Search Results for "'.$_GET["location"].'"</h1>';
             echo '</div>';
-            if (count($res)>0) {
-                foreach ($res as $r) {
+            if (count($resultsHotels)>0) {
+                foreach ($resultsHotels as $r) {
                     echo '<div class="result-content">';
-                    $conn = mysqli_connect('localhost','root','','kirklees-hotel');
                     $sql = "SELECT * FROM hotels left Join amenity_hotel on amenity_hotel.hotel_id = hotels.id left join amenities on amenities.id = amenity_hotel.amenity_id WHERE hotels.id = ".$r["hotel"]."";
-                    $result = mysqli_query($conn, $sql);
-                    if (mysqli_num_rows($result) > 0) {
+                    $resultsAmen = mysqli_query($conn, $sql);
+                    if (mysqli_num_rows($resultsAmen) > 0) {
                         echo '<div class="amen">';
                         echo '<ul>';
-                        while($row = mysqli_fetch_assoc($result)) {
-                            if ($row["id"] == 1 ){
+                        while ($row = mysqli_fetch_assoc($resultsAmen)) {
+                            if ($row["id"] == 1 ) {
                                 echo '<li><span title="Free WiFI"><i class="fas fa-wifi"></i></span></li>';
-                            } else if ($row["id"] == 2 ){
+                            } else if ($row["id"] == 2 ) {
                                 echo '<li><span title="Swimming Pool"><i class="fas fa-swimming-pool"></i></li>';
-                            } else if ($row["id"] == 3 ){
+                            } else if ($row["id"] == 3 ) {
                                 echo '<li><span title="Health Spa"><i class="fas fa-spa"></i></li>';
-                            } else if ($row["id"] == 4 ){
+                            } else if ($row["id"] == 4 ) {
                                 echo '<li><span title="Free Parking"><i class="fas fa-parking"></i></li>';
-                            } else if ($row["id"] == 5 ){
+                            } else if ($row["id"] == 5 ) {
                                 echo '<li><span title="Gym"><i class="fas fa-dumbbell"></i></li>';
-                            } else if ($row["id"] == 6 ){
+                            } else if ($row["id"] == 6 ) {
                                 echo '<li><span title="Air Conditioning"><i class="fas fa-wind"></i></li>';
-                            } else if ($row["id"] == 7 ){
+                            } else if ($row["id"] == 7 ) {
                                 echo '<li><span title="Restaurant"><i class="fas fa-utensils"></i></li>';
-                            } else if ($row["id"] == 8 ){
+                            } else if ($row["id"] == 8 ) {
                                 echo '<li><span title="TV"><i class="fas fa-tv"></i></li>';
-                            } else if ($row["id"] == 9 ){
+                            } else if ($row["id"] == 9 ) {
                                 echo '<li><span title="Pets Allowed"><i class="fas fa-paw"></i></li>';
-                            } else if ($row["id"] == 10 ){
+                            } else if ($row["id"] == 10 ) {
                                 echo '<li><span title="24-hour Reception"><i class="fas fa-concierge-bell"></i></li>';
-                            };
-                        };
-                        echo '</ul>';
-                        echo '</div>';
-                    };
-                    mysqli_close($conn);
+                            }
+                        }
+                    }
+                    echo '</ul>';
+                    echo '</div>';
                     echo '<div class="stars">';
                     echo '<ul>';
                     if ($r["stars"] == 1 ){
@@ -199,14 +190,14 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                     echo '</ul>';
                     echo '</div>';
                     echo '<div class="hotel-img">';
-                    echo '<a href="#"><img src="img/hotel-'.$r["id"].'.jpg" alt=""></a>';
+                    echo '<a href="#"><img src="img/promo.png" alt=""></a>';
                     echo '</div>';
                     echo '<div class="desc">';
                     echo '<h2>'.$r["name"].'</h2><br>';
-                    echo '<h4>£'.$r['price'].'</h4><br>';
+                    echo '<h4>£'.$r["price"].'</h4><br>';
                     echo '<p>Check-in: '.$r['check_in'].' Check-out: '.$r['check_out'].'</p><br>';
                     echo '<div class="results-btn">';
-                    echo '<input type="submit" value="See Details">';
+                    echo '<input type="submit" value="Check availablity">';
                     echo '</div>';
                     echo '</div>';
                     echo '</div>';

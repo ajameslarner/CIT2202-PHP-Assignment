@@ -7,8 +7,13 @@ $script = $_SERVER['SCRIPT_NAME'];
 session_start();
 $_SESSION["page"] = $protocol . '://' . $host . $script;
 
-?>
 
+if (!isset($_SESSION["idSession"])){
+    header('Location: index.php');
+}
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,15 +35,14 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <div class="nav-first">
             <ul>
                 <li><a href="index.php">Home</a></li>
-                <li><a href="about.php">About</a></li>
+                <li><a href="#">About</a></li>
                 <?php
                 if (isset($_SESSION["idSession"])){
-                    echo '<li><a href="dashboard.php">Profile</a></li>';
-                    echo '<li><a href="control/logout.php">Logout</a></li>';
+                    echo '<li><a href="dashboard.php">Listing</a></li>';
                     echo '</ul>';
                     echo '</div>';
-                    echo '<div class="welcome-login">';
-                    echo '<p>Welcome, '.$_SESSION["emailSession"].'</p>';
+                    echo '<div class="welcome-login">'; 
+                    echo '<p>Welcome, '.$_SESSION["emailSession"].'(<a href="control/logout.php">Logout</a>)</p>';
                     echo '</div>';
                 } else {
                     echo '<li><a href="register.php">Register</a></li>';
@@ -49,8 +53,8 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                     echo '<input type="text" name="email" placeholder="email">';
                     echo '<input type="password" name="password" placeholder="password">';
                     echo '<input type="submit" class="submit-btn" name="submit" id="submit" value="Login"><br>';
-                    echo '<a href="pw-reset.html">Forgot your password?</a>';
-                    echo '<a href="pw-reset.html">Create account</a>';
+                    echo '<a href="register.php">Create account</a>';
+                    echo '<a href="#">Forgot your password?</a>'; 
                     echo '<div class="error-handler">';
                     if (isset($_GET["op"])) {
                         if ($_GET["op"] == "emptyLogin") {
@@ -70,21 +74,17 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <div class="search-form">
             <form action="results.php" method="GET">
                 <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" name="location" id="location" placeholder="Search for hotels in your area..." autocomplete="off" required>
+                <input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>
+                <input type="submit" class="search-btn" id="submit" value="Go!">
                 <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
                 </div>
-        </div>
-        <div class="search-form">
-            <p>Choose a start date!</p>
-            <input type="date" name="date" id="date">
-            <input type="submit" class="submit-btn" id="submit" value="Go!">
-        </div>
             </form>
+        </div>
         <div class="nav-second">
             <ul>
-                <a href="details.php"><li>Amenities</li></a>
-                <a href="details.php"><li>Hotel Styles</li></a>
-                <a href="details.php"><li>Locations</li></a>
+                <a href="#"><li>Amenities</li></a>
+                <a href="#"><li>Hotel Styles</li></a>
+                <a href="#"><li>Locations</li></a>
             </ul>
         </div>
         <div class="nav-third">
@@ -95,42 +95,74 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
             </ul>
         </div>
     </section>
-    <div class="bg-container">
     <section class="primary-content">
+    <div class="grid-item-header">
+            <h1>Create <span>your</span> listing</h1>
+            <p>Welcome to Kirklees Hotels</p>
         </div>
-    </section>
-    </div>
-    <section class="secondary-content">
-        <div class="grid-promo">
-            <img src="img/promo.png" style="width: 250px; height: 250px; border-radius: 500px; border: 1px solid black;" alt="">
-            <div class="promo-content">
-                <h2>Amenities</h2>
+    <div class="grid-content">
+    <div class="insert-form">
+                <form action="control/insert.php" method="POST">
+                    <h4>Hotel Registration Form</h4>          
+                    <input type="text" name="name" id="name" placeholder="Your hotel name..." required><br>
+                    <input type="number" name="price" id="price" placeholder="Price per night..." required><br>
+                    <span id="small-text">Check-in:</span><br><input type="time" name="checkin" id="checkin"><br><span id="small-text">Check-out:</span><br><input type="time" name="checkout" id="checkout"><br>
+                    <select name="location" id="location">
+                        <option value="" disabled selected>Hotel Location</option>
+                        <option value="1">Batley</option> 
+                        <option value="2">Colne Valley</option> 
+                        <option value="3">Denby Dale</option> 
+                        <option value="4">Holme Valley</option> 
+                        <option value="5">Huddersfield East</option>
+                        <option value="6">Huddersfield West</option> 
+                        <option value="7">Kirkburton</option> 
+                        <option value="8">Mirfield</option> 
+                        <option value="9">Spen Valley and Heckmondwike</option> 
+                    </select><br>
+                    <select name="stars" id="stars">
+                        <option value="" disabled selected>Hotel Stars</option>
+                        <option value="1">1</option> 
+                        <option value="2">2</option> 
+                        <option value="3">3</option> 
+                        <option value="4">4</option> 
+                        <option value="5">5</option> 
+                    </select><br>
+                    <select name="style" id="style">
+                        <option value="" disabled selected>Hotel Style</option>
+                        <option value="1">Boutique</option> 
+                        <option value="2">Budget</option> 
+                        <option value="3">Business</option> 
+                        <option value="4">Historic</option> 
+                        <option value="5">Luxury</option>
+                    </select><br>
+                    <h3>Select your hotels Amenities</h3><br>
+                    <input type="checkbox" name="amen[]" id="wifi" class="hidden" value="1" ><label for="wifi" id="wifitoggle" class="amenity-inactive" onclick="toggle('wifitoggle')"><span title="Free WiFI"><i class="fas fa-wifi"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="pool" class="hidden" value="2"><label for="pool" id="pooltoggle" class="amenity-inactive" onclick="toggle('pooltoggle')"><span title="Swimming Pool"><i class="fas fa-swimming-pool"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="spa" class="hidden" value="3"><label for="spa" id="spatoggle" class="amenity-inactive" onclick="toggle('spatoggle')"><span title="Spa"><i class="fas fa-spa"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="park" class="hidden" value="4"><label for="park" id="parktoggle" class="amenity-inactive" onclick="toggle('parktoggle')"><span title="Parking"><i class="fas fa-parking"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="gym" class="hidden" value="5"><label for="gym" id="gymtoggle" class="amenity-inactive" onclick="toggle('gymtoggle')"><span title="Gym"><i class="fas fa-dumbbell"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="ac" class="hidden" value="6"><label for="ac" id="actoggle" class="amenity-inactive" onclick="toggle('actoggle')"><span title="A/C"><i class="fas fa-wind"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="food" class="hidden" value="7"><label for="food" id="foodtoggle" class="amenity-inactive" onclick="toggle('foodtoggle')"><span title="Restaurant"><i class="fas fa-utensils"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="tv" class="hidden" value="8"><label for="tv" id="tvtoggle" class="amenity-inactive" onclick="toggle('tvtoggle')"><span title="TV"><i class="fas fa-tv"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="pets" class="hidden" value="9"><label for="pets" id="petstoggle" class="amenity-inactive" onclick="toggle('petstoggle')"><span title="Pets"><i class="fas fa-paw"></i></span></label>
+                    <input type="checkbox" name="amen[]" id="hour" class="hidden" value="10"><label for="hour" id="hourtoggle" class="amenity-inactive" onclick="toggle('hourtoggle')"><span title="24-hour Reception"><i class="fas fa-concierge-bell"></i></span></label>
+                    <br><br><br>
+                    <input type="submit" class="submit-btn" name="submit" id="submit" value="Submit"><br><br>
+                    <div class="error-handler">
+                    <?php
+                    if (isset($_GET["op"])) {
+                        if ($_GET["op"] == "emptyInputHotel") {
+                            echo '<span class="error-message-add">Please fill in all the fields!</span>';
+                        } else if ($_GET["op"] == "success") {
+                            echo '<span class="error-message-add">You hotel has been successfully added!</span>';
+                        } else if ($_GET["op"] == "dbError") {
+                            echo '<span class="error-message-add">Something went wrong! Please try again.</span>';
+                        }
+                    }
+                    ?>
+                    </div>
+                </form>
             </div>
-            <div class="promo-content">
-                <p>This hotel is amazing, this is alot of conent to see waht it looks like when its wrapped around in a
-                    contained section of the website for the descriopti oon this thumbnai .</p>
-            </div>
-        </div>
-        <div class="grid-promo">
-            <img src="img/promo.png" style="width: 250px; height: 250px; border-radius: 500px; border: 1px solid black;" alt="">
-            <div class="promo-content">
-                <h2>Hotel Styles</h2>
-            </div>
-            <div class="promo-content">
-                <p>This hotel is amazing, this is alot of conent to see waht it looks like when its wrapped around in a
-                    contained section of the website for the descriopti oon this thumbnai .</p>
-            </div>
-        </div>
-        <div class="grid-promo">
-            <img src="img/promo.png" style="width: 250px; height: 250px; border-radius: 500px; border: 1px solid black;" alt="">
-            <div class="promo-content">
-                <h2>Locations</h2>
-            </div>
-            <div class="promo-content">
-                <p>This hotel is amazing, this is alot of conent to see waht it looks like when its wrapped around in a
-                    contained section of the website for the descriopti oon this thumbnai .</p>
-            </div>
-        </div>
     </div>
     </section>
     <section class="tertiary-content">
@@ -173,5 +205,28 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
            $('#location-list').fadeOut();
         })
     });
+
+function toggle(ID) {
+    var element = document.getElementById(ID);
+        if (element.classList.contains('amenity-inactive')) {
+            element.classList.remove('amenity-inactive');
+            element.classList.add('amenity-active');
+        } else if (element.classList.contains('amenity-active')) {
+            element.classList.remove('amenity-active');
+            element.classList.add('amenity-inactive');
+        }
+};
+$(document).ready(function() {
+    $('label[for=wifi]').on('click', function(){});
+    $('label[for=pool]').on('click', function(){});
+    $('label[for=spa]').on('click', function(){});
+    $('label[for=park]').on('click', function(){});
+    $('label[for=gym]').on('click', function(){});
+    $('label[for=ac]').on('click', function(){});
+    $('label[for=food]').on('click', function(){});
+    $('label[for=tv]').on('click', function(){});
+    $('label[for=pets]').on('click', function(){});
+    $('label[for=hour]').on('click', function(){});
+});
     </script>
     </html>

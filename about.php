@@ -33,12 +33,11 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
                 <li><a href="about.php">About</a></li>
                 <?php
                 if (isset($_SESSION["idSession"])){
-                    echo '<li><a href="dashboard.php">Profile</a></li>';
-                    echo '<li><a href="control/logout.php">Logout</a></li>';
+                    echo '<li><a href="dashboard.php">Listing</a></li>';
                     echo '</ul>';
                     echo '</div>';
-                    echo '<div class="welcome-login">';
-                    echo '<p>Welcome, '.$_SESSION["emailSession"].'</p>';
+                    echo '<div class="welcome-login">'; 
+                    echo '<p>Welcome, '.$_SESSION["emailSession"].'(<a href="control/logout.php">Logout</a>)</p>';
                     echo '</div>';
                 } else {
                     echo '<li><a href="register.php">Register</a></li>';
@@ -70,16 +69,12 @@ $_SESSION["page"] = $protocol . '://' . $host . $script;
         <div class="search-form">
             <form action="results.php" method="GET">
                 <p>Search for hotels in the Kirklees area today!</p>
-                <input type="text" name="location" id="location" placeholder="Search for hotels in your area..." autocomplete="off" required>
+                <input type="text" name="location" id="location" placeholder="Search by location..." autocomplete="off" required>
+                <input type="submit" class="search-btn" id="submit" value="Go!">
                 <div id="location-list" onclick="document.getElementById('location').focus(); return false;">
                 </div>
-        </div>
-        <div class="search-form">
-            <p>Choose a start date!</p>
-            <input type="date" name="date" id="date">
-            <input type="submit" class="submit-btn" id="submit" value="Go!">
-        </div>
             </form>
+        </div>
         <div class="nav-second">
             <ul>
                 <a href="details.php"><li>Amenities</li></a>

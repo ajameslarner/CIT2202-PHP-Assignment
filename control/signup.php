@@ -5,6 +5,7 @@ if (isset($_POST["submit"])) {
     $email = $_POST["email"];
     $pword = $_POST["pword"];
     $cpword = $_POST["cpword"];
+    $terms = $_POST["terms"];
 
     require_once 'connect.php';
     require_once 'functions.php';
@@ -27,6 +28,10 @@ if (isset($_POST["submit"])) {
     }
     if (passwordValidation($pword) !== false) {
         header("location: ../register.php?op=passwordValidation");
+        exit();
+    }
+    if (termsEmpty($terms) !== false) {
+        header("location: ../register.php?op=termsEmpty");
         exit();
     }
 

@@ -10,6 +10,16 @@ function emptyInput($email, $pword, $cpword) {
     return $result;
 }
 
+function emptyInputHotel($name, $price, $checkin, $checkout, $location, $stars, $style, $amenities) {
+    $result;
+    if (empty($name) || empty($price) || empty($checkin) || empty($checkout) || empty($location) || empty($stars) || empty($style) || empty($amenities)) {
+        $result = true;
+    } else {
+        $result = false;
+    }
+    return $result;
+}
+
 function invalidInput($email) {
     $result;
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -27,6 +37,16 @@ function inputMatching($pword, $cpword) {
     } else {
         $result = false;
     }
+    return $result;
+}
+
+function termsEmpty($terms) {
+    $result;
+    if(empty($terms)) {
+        $result = true;
+    } else {
+        $result = false;
+        }
     return $result;
 }
 
@@ -94,6 +114,37 @@ function emptyLogin($email, $pword) {
     return $result;
 }
 
+function insertHotel($conn, $name, $price, $checkin, $checkout, $location, $stars, $style, $amenities) {
+    $sql = "INSERT INTO hotels (name, price, check_in, check_out, location_id, stars, style_id) VALUES (?, ?, ?, ?, ?, ?, ?)";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)) {
+        header("location: ../dashboard.php?op=dbError");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt, "siiiiii", $name, $price, $checkin, $checkout, $location, $stars, $style);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    
+    $sql = "SELECT id, name FROM hotels WHERE name = '$name'";
+    $matchResult = mysqli_query($conn,$sql);
+
+    foreach ($matchResult as $r) {
+        foreach ($amenities as $a) {
+            $sql = "INSERT INTO amenity_hotel (amenity_id, hotel_id) VALUES ('$a', ".$r["id"].")";
+            $stmt = mysqli_stmt_init($conn);
+            if (!mysqli_stmt_prepare($stmt, $sql)) {
+                header("location: ../dashboard.php?op=dbError");
+                exit();
+            }
+            mysqli_stmt_execute($stmt);
+        }
+        mysqli_stmt_close($stmt);  
+        header("location: ../dashboard.php?op=success");
+        exit();
+    }
+}
+
 function loginUser($conn, $email, $pword) {
     $uExists = inputExists($conn, $email);
 
@@ -116,11 +167,6 @@ function loginUser($conn, $email, $pword) {
         header('Location: ' . $_SESSION["page"] . '?op=success');
         exit();
     }
-
-
-
-
-
 }
 
 ?>
